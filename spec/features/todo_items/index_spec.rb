@@ -3,6 +3,12 @@ require 'spec_helper'
 describe "Viewing todo items" do
 	let!(:todo_list) { TodoList.create(title: "Grocery list", description: "Groceries" ) }
 	
+	def visit_todo_list(list)
+		visit "/to_do_lists"
+		within "#to_do_list_#{list.id}" do
+			click_link "List Items"
+		end 
+	end
 
 	it "displays the title of the todo list" do
 		visit_todo_list(todo_list)
@@ -17,17 +23,16 @@ describe "Viewing todo items" do
 		expect(page.all("ul.todo_items li").size).to eq(0)
   end
 
-  	it "displays item content when a todo list has items" do
-  		todo_list.todo_items.create(content: "Milk")
-  		todo_list.todo_items.create(content: "Eggs")
-  		
-  		visit_todo_list(todo_list)
-  		expect(page.all("ul.todo_items li").size).to eq(2)
-  		
-  		within "ul.todo_items" do 
-  		  expect(page).to have_content("Milk")
-  		  expect(page).to have_content("Eggs")
-  		end
-  	end
-
+	it "displays item content when a todo list has items" do
+		todo_list.todo_items.create(content: "Milk")
+		todo_list.todo_items.create(content: "Eggs")
+		
+		visit_todo_list(todo_list)
+		expect(page.all("ul.todo_items li").size).to eq(2)
+		
+		within "ul.todo_items" do 
+		  expect(page).to have_content("Milk")
+		  expect(page).to have_content("Eggs")
+		end
+	end
 end
