@@ -16,14 +16,17 @@
       <tr id="<%= dom_id(to_do_list) %>"> 
         <td><%= to_do_list.title %></td>
         <td><%= to_do_list.description %></td>
-        <td><%= link_to 'Show', to_do_list %></td>
-        <td><%= link_to 'Edit', edit_to_do_list_path(to_do_list) %></td>
-        <td><%= link_to 'Destroy', to_do_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to 'List Items', to_do_list_todo_items_path(to_do_list) %>
+          <%= link_to 'Show', to_do_list %>
+          <%= link_to 'Edit', edit_to_do_list_path(to_do_list) %>
+          <%= link_to 'Destroy', to_do_list, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
+ 
 <br>
 
 <%= link_to 'New To do list', new_to_do_list_path %>
